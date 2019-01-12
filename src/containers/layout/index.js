@@ -1,12 +1,13 @@
 import React from "react";
+import Sidebar from "../../components/sidebar";
 
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
   return (
     <div className='view-container'>
       <div className="container">
         <div className="row">
           <div className="col-md-3">
-            sidebar
+            <Sidebar/>
           </div>
           <div className="col-md 9">
             {children}
