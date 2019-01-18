@@ -8,7 +8,8 @@ import {
   FETCH_PHONE_BY_ID_START,
   FETCH_PHONE_BY_ID_SUCCESS,
   FETCH_PHONE_BY_ID_FAILURE,
-  ADD_PHONE_TO_BASKET
+  ADD_PHONE_TO_BASKET,
+  SEARCH_PHONE
 } from "../actionTypes";
 import { getRenderedPhonesLength } from "../selectors";
 
@@ -79,3 +80,10 @@ export const addPhoneToBasket = id => dispatch => {
     payload: id
   });
 };
+
+export const searchPhone = text => dispatch => {
+  dispatch({
+    type: SEARCH_PHONE,
+    payload: text
+  })
+}

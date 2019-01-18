@@ -88,8 +88,8 @@ class Phone extends Component {
           className="btn btn-success btn-block"
           onClick={() => addPhoneToBasket(phone.id)}
         >
-          <i className="fa fa-fa-shopping-cart"/>
-          Add to cart
+          <i className="fas fa-shopping-cart"/>{' '}
+           Add to cart
         </button>
       </div>
     );
