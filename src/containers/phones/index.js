@@ -5,13 +5,15 @@ import * as R from "ramda";
 import {
   fetchPhones,
   loadMorePhones,
-  addPhoneToBasket
+  addPhoneToBasket,
+  fetchCategories
 } from "../../actions";
 import { getPhones } from "../../selectors";
 
 class Phones extends Component {
   componentDidMount() {
     this.props.fetchPhones();
+    this.props.fetchCategories();
   }
 
   renderPhone(phone, index) {
@@ -82,7 +84,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchPhones,
   loadMorePhones,
-  addPhoneToBasket
+  addPhoneToBasket,
+  fetchCategories
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Phones);
