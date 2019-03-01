@@ -27,6 +27,7 @@ ReactDOM.render(
         <Switch>
           <Route path="/phones/:id" component={Phone}/>
           <Layout>
+            <Route path='/categories/:id' component={Phones}/>
             <Route path='/' component={Phones}/>
           </Layout>
         </Switch>

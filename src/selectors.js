@@ -3,15 +3,16 @@ import * as R from "ramda";
 export const getPhoneById = (state, id) => R.prop(id, state.phones);
 
 export const getPhones = state => {
-  const applySearch = item => R.contains(
-    state.phonesPage.search,
-    R.prop("name", item)
+  const applySearchCaseInsensitive = item => R.contains(
+    R.toLower(state.phonesPage.search),
+    R.toLower(R.prop("name", item))
   );
+
   const phones = R.compose(
-    R.filter(applySearch),
+    R.filter(applySearchCaseInsensitive),
     R.map(id => getPhoneById(state, id))
   )(state.phonesPage.ids);
-  // const phones = R.map(id => getPhoneById(state, id), state.phonesPage.ids);
+
   return phones;
 };
 
@@ -26,3 +27,16 @@ export const getTotalBasketPrice = state => {
   )(state.basket);
   return totalPrice;
 };
+
+export const getCategories = state => R.values(state.categories);
+
+// export const getActiveCategoryId = ownProps => {
+//   R.path(['params', 'id'], ownProps);
+//   console.log(ownProps.match);
+// }
+export const getActiveCategoryId = ownProps => {
+// R.path(['location', 'id'], ownProps)
+// console.log(ownProps.location.pathname.startsWith('/categories'));
+  return ownProps.location.pathname.replace("/categories/", "");
+};
+// export const getActiveCategoryId = ownProps => ownProps.match.params.id;

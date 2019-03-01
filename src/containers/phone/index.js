@@ -10,6 +10,7 @@ class Phone extends Component {
 
   componentDidMount() {
     this.props.fetchPhoneById(this.props.match.params.id);
+    // this.props.fetchPhoneById(this.props.loca.params.id);
   }
 
   renderFields() {
