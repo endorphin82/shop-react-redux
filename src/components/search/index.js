@@ -25,7 +25,6 @@ class Search extends Component {
     this.props.searchPhone(this.state.value);
   }
 
-
   render() {
     return (
       <div className="well blosd">

@@ -92,7 +92,6 @@ export const searchPhone = text => dispatch => {
   });
 };
 
-
 export const fetchCategories = () => async dispatch => {
   dispatch({ type: FETCH_CATEGORIES_START });
 
