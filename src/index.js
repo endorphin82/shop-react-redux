@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -23,15 +23,13 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <Fragment>
+      <Layout>
         <Switch>
           <Route path="/phones/:id" component={Phone}/>
-          <Layout>
-            <Route path='/categories/:id' component={Phones}/>
-            <Route path='/' component={Phones}/>
-          </Layout>
+          <Route path='/categories/:id' component={Phones}/>
+          <Route path='/' component={Phones}/>
         </Switch>
-      </Fragment>
+      </Layout>
     </Router>
   </Provider>,
   document.getElementById("root")

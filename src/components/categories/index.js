@@ -5,7 +5,6 @@ import classnames from "classnames";
 import { getCategories, getActiveCategoryId } from "../../selectors";
 import { Link, withRouter } from "react-router-dom";
 import * as R from "ramda";
-import _isNumber from "ramda/es/internal/_isNumber";
 
 const Categories = ({ categories, activeCategoryId }) => {
   console.log("activeCategoryId", activeCategoryId);
@@ -13,7 +12,7 @@ const Categories = ({ categories, activeCategoryId }) => {
     const getActiveState = R.propEq("id", activeCategoryId);
     const linkClass = classnames({
       "list-group-item": true,
-      "active": getActiveState(category)
+      "active": getActiveState(category) || activeCategoryId === "/"
     });
     return (
       <Link
@@ -29,7 +28,7 @@ const Categories = ({ categories, activeCategoryId }) => {
   const renderAllCategories = () => {
     const linkClass = classnames({
       "list-group-item": true,
-      "active": activeCategoryId === "/"
+      "active": R.isNil(activeCategoryId) || activeCategoryId === "/"
     });
     return (
       <Link
