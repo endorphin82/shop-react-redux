@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import Layout from "./containers/layout";
 import Phones from "./containers/phones";
 import Phone from "./containers/phone";
+import Basket from "./containers/basket";
 
 import "./main.css";
 
@@ -23,13 +24,16 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <Layout>
+      <Fragment>
         <Switch>
+          <Route path="/basket" component={Basket}/>
           <Route path="/phones/:id" component={Phone}/>
-          <Route path='/categories/:id' component={Phones}/>
-          <Route path='/' component={Phones}/>
+          <Layout>
+            <Route path='/categories/:id' component={Phones}/>
+            <Route path='/' component={Phones}/>
+          </Layout>
         </Switch>
-      </Layout>
+      </Fragment>
     </Router>
   </Provider>,
   document.getElementById("root")
