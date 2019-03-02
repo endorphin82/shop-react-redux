@@ -19,27 +19,38 @@ export const getPhones = (state, ownProps) => {
     return R.compose(
       R.filter(applySearchCaseInsensitive),
       R.map(id => getPhoneById(state, id))
-    )
-    (state.phonesPage.ids);
+    )(state.phonesPage.ids);
   }
   return R.compose(
     R.filter(applySearchCaseInsensitive),
     R.when(R.always(activeCategoryId), R.filter(applyCategory)),
     R.map(id => getPhoneById(state, id))
-  )
-  (state.phonesPage.ids);
+  )(state.phonesPage.ids);
 };
 
 export const getRenderedPhonesLength = state => R.length(state.phonesPage.ids);
 
+export const getBasketWithCount = state => {
+  const uniqueIds = R.uniq(state.basket);
+  const phoneCount = id => R.compose(
+    R.length,
+    R.filter(basketId => R.equals(id, basketId))
+  )(state.basket);
+  const phoneWithCount = phone => R.assoc("count", phoneCount(phone.id), phone);
+  return R.compose(
+    R.map(phoneWithCount),
+    R.map(id => getPhoneById(state, id))
+  )(uniqueIds);
+};
+
 export const getTotalBasketCount = state => R.length(state.basket);
+
 export const getTotalBasketPrice = state => {
-  const totalPrice = R.compose(
+  return R.compose(
     R.sum,
     R.pluck("price"),
     R.map(id => getPhoneById(state, id))
   )(state.basket);
-  return totalPrice;
 };
 
 export const getCategories = state => R.values(state.categories);
