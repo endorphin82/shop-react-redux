@@ -1,9 +1,17 @@
 import React from "react";
-import { connect } from "react-redux";
-import { getTotalBasketPrice, getBasketWithCount } from "../../selectors";
 import * as R from "ramda";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-const Basket = ({ phones, totalPrice }) => {
+import { getTotalBasketPrice, getBasketWithCount } from "../../selectors";
+import { removePhoneFromBasket, cleanBasket, basketCheckout } from "../../actions";
+
+const Basket = ({
+  phones, totalPrice,
+  removePhoneFromBasket,
+  cleanBasket,
+  basketCheckout
+}) => {
   const isBasketEmpty = R.isEmpty(phones);
   const renderContent = () => (
     <div>
@@ -28,7 +36,9 @@ const Basket = ({ phones, totalPrice }) => {
               <td>{phone.price}</td>
               <td>{phone.count}</td>
               <td>
-                <span className="delete-cart"/>
+                <span
+                  onClick={() => removePhoneFromBasket(phone.id)}
+                  className="delete-cart"/>
               </td>
             </tr>
           ))}
@@ -37,20 +47,47 @@ const Basket = ({ phones, totalPrice }) => {
       </div>
       {
         R.not(isBasketEmpty) &&
-          <div className="row">
-            <div className="pull-right total-user-checkout">
-              <b>Total</b>
-              ${totalPrice}
-            </div>
+        <div className="row">
+          <div className="pull-right total-user-checkout">
+            <b>Total</b>
+            ${totalPrice}
           </div>
+        </div>
       }
     </div>
   );
   const renderSidebar = () => (
     <div>
-      Sidebar
+      <Link
+        to='/'
+        className="btn btn-info"
+      >
+        <span className="glyphicon glyphicon-info-sign"/>
+        <span> Continue shopping</span>
+      </Link>
+      {
+        R.not(isBasketEmpty) &&
+        <div>
+          <button
+            onClick={cleanBasket}
+            className="btn btn-danger"
+          >
+            <span
+              className="glyphicon glyphicon-trash"/>{' '}
+           Clear cart
+          </button>
+          <button
+            className="btn btn-success"
+            onClick={() => basketCheckout(phones)}
+          >
+            <span className="glyphicon glyphicon-envelope" />{' '}
+            Checkout
+          </button>
+        </div>
+      }
     </div>
   );
+
   return (
     <div className="view-container">
       <div className="container">
@@ -58,7 +95,7 @@ const Basket = ({ phones, totalPrice }) => {
           <div className="col-md-9">
             {renderContent()}
           </div>
-          <div className="com-md-3 btn-user-checkout">
+          <div className="col-md-3 btn-user-checkout">
             {renderSidebar()}
           </div>
         </div>
@@ -72,4 +109,10 @@ const mapStateToProps = state => ({
   totalPrice: getTotalBasketPrice(state)
 });
 
-export default connect(mapStateToProps, null)(Basket);
+const mapDispatchToProps = {
+  removePhoneFromBasket,
+  cleanBasket,
+  basketCheckout
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);
